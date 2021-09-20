@@ -13,18 +13,22 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   User user = UserPreferences.myUser;
 
+  final name_controller = TextEditingController();
+  final email_controller = TextEditingController();
+  final about_controller = TextEditingController();
+
+  String name = "";
+  String email = "";
+  String about = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.blue,
-          ),
-          onPressed: () {},
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: BackButton(
+          color: Colors.blue,
         ),
         actions: [
           IconButton(
@@ -88,71 +92,95 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       .scaffoldBackgroundColor),
                               color: Colors.blue),
                           child: Icon(
-                            Icons.edit,
+                            Icons.add_a_photo_rounded,
                             color: Colors.white,
                           ),
                         ))
                   ],
                 ),
               ),
-              SizedBox(height: 35,),
-              buildTextField("Full Name", user.name),
-              buildTextField("E-mail", user.email),
-              buildTextField("About", user.about),
-              SizedBox(height: 35,),
-              Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                OutlinedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: Text(
-                      "CANCEL",
-                      style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 2.2,
-                          color: Colors.black),
-                    )),
-                ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue
+              SizedBox(
+                height: 35,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 35),
+                child: TextField(
+                  controller: name_controller,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 5),
+                    labelText: "Full Name",
+                    labelStyle: TextStyle(fontSize: 20),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: user.name,
+                    hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 35),
+                child: TextField(
+                  controller: email_controller,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 5),
+                    labelText: "E-mail",
+                    labelStyle: TextStyle(fontSize: 20),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: user.email,
+                    hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 35),
+                child: TextField(
+                  controller: about_controller,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 5),
+                    labelText: "About",
+                    labelStyle: TextStyle(fontSize: 20),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: user.about,
+                    hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        name = name_controller.text;
+                        email = email_controller.text;
+                        about = about_controller.text;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(primary: Colors.blue),
                     child: Text(
                       "SAVE",
                       style: TextStyle(
                           fontSize: 14,
                           letterSpacing: 2.2,
                           color: Colors.white),
-                    )
-                    )
+                    ))
               ]),
-              
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildTextField(String labelText, String placeholder) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35),
-      child: TextField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(bottom: 5),
-                  labelText: labelText,
-                  labelStyle: TextStyle(fontSize: 20),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: placeholder,
-                  hintStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
     );
   }
 }
